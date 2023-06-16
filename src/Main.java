@@ -49,13 +49,12 @@ public class Main {
                 String method = exchange.getRequestMethod();
                 URI uri = exchange.getRequestURI();
                 String ctxPath = exchange.getHttpContext().getPath();
-                writer.println("<html><body>");
+
                 write(writer, "HTTP Метод", method);
                 write(writer, "Запрос", uri.toString());
                 write(writer, "Обработан через", ctxPath);
                 writeHeaders(writer, "Заголовки запроса", exchange.getRequestHeaders());
                 writeData(writer, exchange);
-                writer.println("</body></html>");
                 writer.flush();
             }
         } catch (IOException e) {
@@ -74,13 +73,13 @@ public class Main {
                 String method = exchange.getRequestMethod();
                 URI uri = exchange.getRequestURI();
                 String ctxPath = exchange.getHttpContext().getPath();
-                writer.println("<html><body>");
+
                 write(writer, "HTTP Метод", method);
                 write(writer, "Запрос", uri.toString());
                 write(writer, "Обработан через", ctxPath);
                 writeHeaders(writer, "Заголовки запроса", exchange.getRequestHeaders());
                 writeData(writer, exchange);
-                writer.println("</body></html>");
+
                 writer.flush();
             }
         } catch (IOException e) {
@@ -99,13 +98,13 @@ public class Main {
                 String method = exchange.getRequestMethod();
                 URI uri = exchange.getRequestURI();
                 String ctxPath = exchange.getHttpContext().getPath();
-                writer.println("<html><body>");
+
                 write(writer, "HTTP Метод", method);
                 write(writer, "Запрос", uri.toString());
                 write(writer, "Обработан через", ctxPath);
                 writeHeaders(writer, "Заголовки запроса", exchange.getRequestHeaders());
                 writeData(writer, exchange);
-                writer.println("</body></html>");
+
                 writer.flush();
             }
         } catch (IOException e) {
