@@ -21,10 +21,10 @@ public class Main {
 
     private static void initRoutes(HttpServer server) {
         server.createContext("/", Main::handleRequest);
-        server.createContext("/apps/", Main::handleAppsRequest);
+        server.createContext("/apps", Main::handleAppsRequest);
         server.createContext("/apps/profile", Main::handleProfileRequest);
-        server.createContext("/index.html", Main::handleStaticFileRequest);
-        server.createContext("/styles.css", Main::handleStaticFileRequest);
+        server.createContext("/index.html", Main::handleFileRequest);
+        server.createContext("/styles.css", Main::handleFileRequest);
     }
 
     private static HttpServer makeServer() throws IOException {
@@ -40,7 +40,7 @@ public class Main {
 
     private static void handleRequest(HttpExchange exchange) {
         try {
-            exchange.getResponseHeaders().add("Content-Type", "text/html; charset=utf-8");
+            exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=utf-8");
 
             int responseCode = 200;
             int length = 0;
@@ -65,7 +65,7 @@ public class Main {
 
     private static void handleAppsRequest(HttpExchange exchange) {
         try {
-            exchange.getResponseHeaders().add("Content-Type", "text/html; charset=utf-8");
+            exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=utf-8");
 
             int responseCode = 200;
             int length = 0;
@@ -90,7 +90,7 @@ public class Main {
 
     private static void handleProfileRequest(HttpExchange exchange) {
         try {
-            exchange.getResponseHeaders().add("Content-Type", "text/html; charset=utf-8");
+            exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=utf-8");
 
             int responseCode = 200;
             int length = 0;
@@ -113,7 +113,7 @@ public class Main {
         }
     }
 
-    private static void handleStaticFileRequest(HttpExchange exchange) {
+    private static void handleFileRequest(HttpExchange exchange) {
         try {
             String requestPath = exchange.getRequestURI().getPath();
             String filePath = "htmls" + requestPath;
@@ -127,7 +127,7 @@ public class Main {
                 responseBody.write(fileBytes);
                 responseBody.close();
             } else {
-                send404Response(exchange);
+                response404(exchange);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -157,7 +157,7 @@ public class Main {
         return "application/octet-stream";
     }
 
-    private static void send404Response(HttpExchange exchange) throws IOException {
+    private static void response404(HttpExchange exchange) throws IOException {
         String response = "404 (Not Found)";
         exchange.sendResponseHeaders(404, response.length());
         OutputStream responseBody = exchange.getResponseBody();
@@ -172,7 +172,7 @@ public class Main {
     }
 
     private static void write(Writer writer, String msg, String method) {
-        String data = String.format("%s: %s%n%n", msg, method);
+        String data = String.format("%s: %s\n\n", msg, method);
         try {
             writer.write(data);
         } catch (IOException e) {
